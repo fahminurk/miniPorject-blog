@@ -2,7 +2,7 @@ import { Text, Box, Center, Flex, Icon } from "@chakra-ui/react";
 import { FiSettings } from "react-icons/fi";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
-export default function Navbar() {
+export default function NavbarProfile() {
   return (
     <>
       <Center>

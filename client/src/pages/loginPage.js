@@ -5,6 +5,8 @@ import {
   Flex,
   Image,
   Input,
+  InputGroup,
+  InputRightElement,
   Text,
   useToast,
 } from "@chakra-ui/react";
@@ -14,10 +16,10 @@ import { FaFacebook } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import { ViewOffIcon, ViewIcon } from "@chakra-ui/icons";
 import { api } from "../api/api";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function LoginPage() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const toast = useToast();
   const nav = useNavigate();
   const [show, setShow] = React.useState(false);
@@ -75,10 +77,10 @@ export default function LoginPage() {
         })
         .then((res) => {
           console.log(res.data);
-          // dispatch({
-          //   type: 'login',
-          //   payload: res.data
-          // })
+          dispatch({
+            type: "login",
+            payload: res.data,
+          });
           toast({
             title: res.data.message,
             status: "success",
@@ -121,12 +123,20 @@ export default function LoginPage() {
                     onChange={inputHandler}
                   />
 
-                  <Input
-                    id="password"
-                    variant={"filled"}
-                    placeholder="Password"
-                    onChange={inputHandler}
-                  />
+                  <InputGroup size="md">
+                    <Input
+                      type={show ? "text" : "password"}
+                      id="password"
+                      variant={"filled"}
+                      placeholder="Password"
+                      onChange={inputHandler}
+                    />
+                    <InputRightElement width="4rem">
+                      <Button h="1.75rem" size="sm" onClick={handleClick}>
+                        {show ? <ViewOffIcon /> : <ViewIcon />}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
                 </Flex>
                 <Box>
                   <Button

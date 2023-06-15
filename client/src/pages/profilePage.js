@@ -9,15 +9,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { FiSettings } from "react-icons/fi";
-
 import img from "../assets/tzuyu1.jpg";
-import Sidebar from "../components/sidebar";
-import Navbar from "../components/navbar";
+import NavbarProfile from "../components/navbarProfile";
 
 export default function ProfilePage() {
   return (
     <>
-      <Navbar />
+      <NavbarProfile />
       <Center>
         {/* <Box h={"100vh"}> */}
         <Flex flexDir={"column"}>
