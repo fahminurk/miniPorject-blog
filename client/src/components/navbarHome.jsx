@@ -8,7 +8,8 @@ export default function NavbarHome() {
     <>
       <Center>
         <Flex
-          w={"470px"}
+          w={"100vw"}
+          maxW={"470px"}
           h={"44px"}
           position={"fixed"}
           top={0}
