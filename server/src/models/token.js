@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
         defaultValue: true,
       },
       status: {
-        type: Sequelize.ENUM("LOGIN", "FORGOT-PASSWORD"),
+        type: Sequelize.ENUM("LOGIN", "FORGOT-PASSWORD", "VERIFICATION"),
       },
     },
     { paranoid: true }

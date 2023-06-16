@@ -15,6 +15,16 @@ router.get("/token", userController.getByToken, userController.getUserByToken);
 //validasi lewat email
 router.get("/generate-token/email", userController.generateTokenByEmail);
 
+//verify email
+router.get("/resendVerif/:email", userController.resendVerification);
+
+//patch verif
+router.patch(
+  "/update-verif",
+  userController.getByToken,
+  userController.verifyByToken
+);
+
 //edit profile
 router.patch(
   "/editProfile/:id",

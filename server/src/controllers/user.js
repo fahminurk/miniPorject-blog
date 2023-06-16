@@ -5,6 +5,8 @@ const moment = require("moment");
 const mailer = require("../lib/nodemailer");
 const url = process.env.forgot_password_url;
 const avatar_url = process.env.avatar_url;
+const verif_url = process.env.verif_url;
+
 const userController = {
   register: async (req, res) => {
     try {
@@ -224,6 +226,63 @@ const userController = {
         },
       });
       return res.status(200).send({ message: "success edit profile" });
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).send(err.message);
+    }
+  },
+  resendVerification: async (req, res) => {
+    try {
+      const user = await db.User.findOne({
+        where: {
+          email: req.params.email,
+        },
+      });
+
+      const token = await db.Token.create({
+        expired: moment().add(10, "minutes").format(),
+        token: nanoid(),
+        payload: JSON.stringify({ id: user.dataValues.id }),
+        status: "VERIFICATION",
+      });
+
+      mailer({
+        subject: mailer.subject,
+        to: user.dataValues.email,
+        text: verif_url + token.dataValues.token,
+      });
+      return res.send({ message: "check your email" });
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).send(err.message);
+    }
+  },
+  verifyByToken: async (req, res) => {
+    try {
+      let token = req.headers.authorization;
+      const { id } = req.user;
+
+      await db.User.update(
+        {
+          status: "verified",
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+      await db.Token.update(
+        {
+          valid: false,
+        },
+        {
+          where: {
+            token,
+          },
+        }
+      );
+      return res.send({ message: "your account has been verified" });
     } catch (err) {
       console.log(err.message);
       return res.status(500).send(err.message);
