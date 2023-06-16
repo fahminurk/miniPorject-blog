@@ -17,6 +17,7 @@ import { BsBookmark } from "react-icons/bs";
 import love from "../assets/love.png";
 import PopupVerif from "../components/popupVerif";
 import { useSelector } from "react-redux";
+import Footer from "../components/Footer";
 
 export default function HomePage() {
   const userSelector = useSelector((state) => state.auth);
@@ -33,6 +34,7 @@ export default function HomePage() {
             maxW={"470px"}
             p={2}
             pt={"110px"}
+            pb={"35px"}
             border={"1px"}
             // gap={2}
           >
@@ -209,6 +211,7 @@ export default function HomePage() {
           </Flex>
         </Center>
       </Box>
+      <Footer />
     </>
   );
 }

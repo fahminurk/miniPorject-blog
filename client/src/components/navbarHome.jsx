@@ -6,19 +6,24 @@ import { AiOutlinePlusSquare } from "react-icons/ai";
 export default function NavbarHome() {
   return (
     <>
-      <Center>
+      <Center
+        bg={"white"}
+        w={"100vw"}
+        h="44px"
+        border={"1px solid black"}
+        zIndex={1}
+        position={"fixed"}
+        top={0}
+      >
+        {/* <Flex justifyContent={"center"}> */}
         <Flex
           w={"100vw"}
           maxW={"470px"}
           h={"44px"}
-          position={"fixed"}
-          top={0}
-          zIndex={1}
           justifyContent={"space-between"}
           alignItems={"center"}
           px={3}
-          border={"1px"}
-          bg={"white"}
+          // mr={6}
         >
           <Box w={"100px"}>
             <Image src={instagram} />
@@ -33,6 +38,7 @@ export default function NavbarHome() {
             </Box>
           </Flex>
         </Flex>
+        {/* </Flex> */}
       </Center>
     </>
   );

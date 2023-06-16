@@ -6,7 +6,7 @@ export default function PopupVerif() {
       <Center>
         <Box
           w={"100vw"}
-          maxW={"470px"}
+          // maxW={"470px"}
           bg={"red.400"}
           textAlign={"center"}
           py={1}

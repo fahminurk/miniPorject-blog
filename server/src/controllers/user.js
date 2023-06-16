@@ -4,7 +4,7 @@ const { nanoid } = require("nanoid");
 const moment = require("moment");
 const mailer = require("../lib/nodemailer");
 const url = process.env.forgot_password_url;
-
+const avatar_url = process.env.avatar_url;
 const userController = {
   register: async (req, res) => {
     try {
@@ -202,6 +202,31 @@ const userController = {
     } catch (err) {
       console.log(err.message);
       return res.status(500).send({ message: err.message });
+    }
+  },
+  editProfile: async (req, res) => {
+    console.log("asdasf");
+    try {
+      const { fullname, username, bio } = req.body;
+      const filename = req.file?.filename;
+      const data = { ...req.body };
+
+      console.log(filename);
+      console.log(data.username);
+
+      if (filename) {
+        data.avatar_url = avatar_url + filename;
+      }
+
+      await db.User.update(data, {
+        where: {
+          id: req.params.id,
+        },
+      });
+      return res.status(200).send({ message: "success edit profile" });
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).send(err.message);
     }
   },
 };

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers").userController;
+const { fileUploader } = require("../middlewares/multer");
 
 //register
 router.post("/", userController.register);
@@ -13,6 +14,15 @@ router.get("/token", userController.getByToken, userController.getUserByToken);
 
 //validasi lewat email
 router.get("/generate-token/email", userController.generateTokenByEmail);
+
+//edit profile
+router.patch(
+  "/editProfile/:id",
+  fileUploader({
+    destinationFolder: "avatar",
+  }).single("avatar"),
+  userController.editProfile
+);
 
 //forgot password
 router.patch(
