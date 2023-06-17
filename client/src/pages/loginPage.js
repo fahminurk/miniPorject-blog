@@ -82,7 +82,7 @@ export default function LoginPage() {
             payload: res.data,
           });
           toast({
-            title: res.data.message,
+            title: "Success login",
             status: "success",
             position: "top",
             duration: 1000,
@@ -102,7 +102,7 @@ export default function LoginPage() {
   return (
     <>
       <Box>
-        <Center>
+        <Center h={"100vh"}>
           <Flex flexDir={"column"}>
             <Flex
               my={3}

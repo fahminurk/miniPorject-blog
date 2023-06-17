@@ -4,11 +4,11 @@ module.exports = (sequelize, Sequelize) => {
     {
       email: {
         type: Sequelize.STRING,
-        unique: true,
+        // unique: "email",
       },
       username: {
         type: Sequelize.STRING,
-        unique: true,
+        // unique: "username",
       },
       password: {
         type: Sequelize.STRING,
@@ -26,6 +26,12 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.ENUM("verified", "unverified"),
         defaultValue: "unverified",
       },
+    },
+    {
+      indexes: [
+        { unique: true, fields: ["email"] },
+        { unique: true, fields: ["username"] },
+      ],
     },
     {
       paranoid: true,

@@ -109,6 +109,7 @@ export default function RegisterPage() {
               w={"350px"}
               border={"1px"}
               borderColor={"#ababab"}
+              // mb={5}
             >
               <Image src={instagram} mt={10} mb={5} mx={20} />
               <Flex px={10} gap={5} flexDir={"column"}>
@@ -272,6 +273,7 @@ export default function RegisterPage() {
               // h={"100vh"}
               border={"1px"}
               borderColor={"#ababab"}
+              mb={3}
             >
               <Flex justifyContent={"center"} gap={1} fontSize={15} p={5}>
                 <Text>Have an account? </Text>

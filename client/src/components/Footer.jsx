@@ -6,6 +6,7 @@ import {
   Icon,
   IconButton,
   Image,
+  useDisclosure,
 } from "@chakra-ui/react";
 import instagram from "../assets/Instagram_logo.png";
 import love from "../assets/love.png";
@@ -15,9 +16,21 @@ import { BiMoviePlay } from "react-icons/bi";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import NewPost from "./newPost";
+import { api } from "../api/api";
+import { useState } from "react";
 
 export default function Footer() {
   const userSelector = useSelector((state) => state.auth);
+  const { isOpen, onClose, onOpen } = useDisclosure();
+  const [post, setPost] = useState([]);
+
+  const fetchPost = async () => {
+    await api.get("/posts/" + userSelector.id).then((res) => {
+      // console.log(res.data);
+      setPost(res.data);
+    });
+  };
   return (
     <>
       <Center
@@ -53,8 +66,9 @@ export default function Footer() {
           <Box boxSize={8}>
             <Image as={BiMoviePlay} size={"lg"} />
           </Box>
-          <Box boxSize={8}>
+          <Box boxSize={8} onClick={onOpen}>
             <Image as={AiOutlinePlusSquare} size={"lg"} />
+            <NewPost isOpen={isOpen} onClose={onClose} fetch={fetchPost} />
           </Box>
           <Box boxSize={8}>
             <Image as={IoPaperPlaneOutline} size={"lg"} />

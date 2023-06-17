@@ -6,6 +6,8 @@ import HomePage from "../pages/homePage";
 import ForgotPasswordPage from "../pages/forgotPasswordPage";
 import ChangePasswordPage from "../pages/changePasswordPage";
 import ProtectedPage from "./protectedPage";
+import VerifPage from "../pages/verifPage";
+import PostDetailPage from "../pages/postDetailPage";
 
 const routes = [
   <Route
@@ -33,6 +35,14 @@ const routes = [
     }
   />,
   <Route
+    path="/post/:id"
+    element={
+      <ProtectedPage needLogin={true}>
+        <PostDetailPage />
+      </ProtectedPage>
+    }
+  />,
+  <Route
     path="/forgot-password"
     element={
       <ProtectedPage guestOnly={true}>
@@ -56,6 +66,15 @@ const routes = [
       </ProtectedPage>
     }
   />,
+  <Route
+    path="/update-verif/:token"
+    element={
+      <ProtectedPage needLogin={true}>
+        <VerifPage />
+      </ProtectedPage>
+    }
+  />,
+
   <Route
     path="/*"
     element={<ProtectedPage needLogin={true} guestOnly={true} />}

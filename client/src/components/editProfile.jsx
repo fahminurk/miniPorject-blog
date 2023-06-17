@@ -14,13 +14,14 @@ import {
   Flex,
   useToast,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { api } from "../api/api";
 
 export default function EditProfile(props) {
   const toast = useToast();
   const userSelector = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const inputFileRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(userSelector.avatar_url);
@@ -44,7 +45,7 @@ export default function EditProfile(props) {
     formData.append("username", user.username);
     formData.append("bio", user.bio);
 
-    await api
+    const response = await api
       .patch("/accounts/editProfile/" + userSelector.id, formData)
       .then((res) => {
         toast({
@@ -54,6 +55,10 @@ export default function EditProfile(props) {
           duration: 1000,
           isClosable: true,
         });
+        // dispatch({
+        //   type: "login",
+        //   payload: response.data,
+        // });
         props.onClose();
       })
       .catch(() => {

@@ -2,7 +2,9 @@ import { Text, Box, Center, Flex, Icon } from "@chakra-ui/react";
 import { FiSettings } from "react-icons/fi";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
+import { MdArrowBackIos } from "react-icons/md";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 export default function NavbarProfile() {
   const userSelector = useSelector((state) => state.auth);
   return (
@@ -38,6 +40,41 @@ export default function NavbarProfile() {
           <Box>
             <Icon boxSize={"25px"} as={AiOutlineUsergroupAdd} />
           </Box>
+        </Flex>
+      </Center>
+    </>
+  );
+}
+
+export function NavbarPhoto() {
+  return (
+    <>
+      <Center
+        bg={"white"}
+        w={"100vw"}
+        h="44px"
+        border={"1px solid black"}
+        zIndex={1}
+        position={"fixed"}
+        top={0}
+      >
+        <Flex
+          w={"100vw"}
+          maxW={"470px"}
+          h={"44px"}
+          alignItems={"center"}
+          px={3}
+
+          // border={"1px"}
+        >
+          <Link to="/profile">
+            <Icon boxSize={"25px"} as={MdArrowBackIos} />
+          </Link>
+          <Center>
+            <Flex alignItems={"center"}>
+              <Text>Photo</Text>
+            </Flex>
+          </Center>
         </Flex>
       </Center>
     </>

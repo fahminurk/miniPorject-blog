@@ -1,0 +1,37 @@
+-- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
+--
+-- Host: localhost    Database: db_instagram
+-- ------------------------------------------------------
+-- Server version	8.0.32
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Fahminurk31@gmail.com','fahminurk','$2b$10$spGsMlvnbJOEr2thdDc6SebzhyjdlM39ijcb9crXU3dqNx6fUyXdG','fahmi nurkamil','2023-06-14 07:25:43','2023-06-17 02:30:55','ayeeee','http://localhost:2000/avatar/POST_4wQkd_recJinp4_arFF6s.jpeg','verified'),(13,'fahminurk@gmail.com','fahminurkk','$2b$10$IfP6S2xmIUYz2FmZdrn6.ehcx1J9PhM3/hvLJKlFg/6avw63VUh7e',NULL,'2023-06-17 02:28:34','2023-06-17 02:28:34',NULL,NULL,'unverified'),(14,'ajengtyas@gmail.com','ajengtyas','$2b$10$pBfjNv0x0WLCDiE2.kxWfe6M73mgIHIoFOXPfNt.L8FGkEE36J5mO','ajeng tyas','2023-06-17 04:11:19','2023-06-17 04:15:31','love ur self','http://localhost:2000/avatar/POST_JuCU1PlXlAMX3mZZ-5QW0.jpeg','unverified');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-06-17 15:32:18

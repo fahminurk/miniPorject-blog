@@ -86,6 +86,7 @@ const userController = {
       return res.status(500).send(err.message);
     }
   },
+
   getByToken: async (req, res, next) => {
     try {
       let token = req.headers.authorization;
@@ -121,10 +122,6 @@ const userController = {
     delete req.user.dataValues.password;
     // console.log(req.user);
     res.send(req.user);
-    // res.send({
-    //   data: req.user,
-    //   message: "success login",
-    // });
   },
   generateTokenByEmail: async (req, res) => {
     try {
@@ -134,7 +131,7 @@ const userController = {
           email,
         },
       });
-      console.log(user);
+      // console.log(user);
 
       if (user) {
         await db.Token.update(
@@ -207,14 +204,14 @@ const userController = {
     }
   },
   editProfile: async (req, res) => {
-    console.log("asdasf");
+    // console.log("asdasf");
     try {
       const { fullname, username, bio } = req.body;
       const filename = req.file?.filename;
       const data = { ...req.body };
 
-      console.log(filename);
-      console.log(data.username);
+      // console.log(filename);
+      // console.log(data.username);
 
       if (filename) {
         data.avatar_url = avatar_url + filename;
@@ -261,7 +258,7 @@ const userController = {
     try {
       let token = req.headers.authorization;
       const { id } = req.user;
-
+      console.log(req.user);
       await db.User.update(
         {
           status: "verified",

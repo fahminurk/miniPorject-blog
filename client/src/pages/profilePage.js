@@ -25,10 +25,24 @@ import { useSelector } from "react-redux";
 import PopupVerif from "../components/popupVerif";
 import { Link } from "react-router-dom";
 import EditProfile from "../components/editProfile";
+import { api } from "../api/api";
+import { useEffect, useState } from "react";
 
 export default function ProfilePage() {
   const userSelector = useSelector((state) => state.auth);
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const [post, setPost] = useState([]);
+
+  useEffect(() => {
+    fetchPost();
+  }, []);
+
+  const fetchPost = async () => {
+    await api.get("/posts/" + userSelector.id).then((res) => {
+      console.log(res.data);
+      setPost(res.data);
+    });
+  };
 
   return (
     <>
@@ -42,9 +56,9 @@ export default function ProfilePage() {
           maxW={"470px"}
           // h={"100vh"}
           p={3}
-          pt={"110px"}
+          pt={"80px"}
           pb={"35px"}
-          border={"1px"}
+          // border={"1px"}
           gap={3}
         >
           {/* avatar, username, editP */}
@@ -80,7 +94,7 @@ export default function ProfilePage() {
           <Flex justifyContent={"space-around"}>
             <Box>
               <Flex flexDir={"column"} align={"center"}>
-                <Text fontWeight={"bold"}>9</Text>
+                <Text fontWeight={"bold"}>{post.length}</Text>
                 <Text>Posts</Text>
               </Flex>
             </Box>
@@ -116,16 +130,31 @@ export default function ProfilePage() {
             </Link>
           </Flex>
           {/* post */}
+
           <Grid templateColumns={"repeat(3, 1fr)"}>
-            <GridItem w={"100%"} h={"100%"} maxH={"148px"} maxW={"148px"}>
-              <Image src={img} objectFit={"cover"} h={"100%"} w={"100%"} />
-            </GridItem>
-            <GridItem w={"100%"} h={"100%"} maxH={"148px"} maxW={"148px"}>
-              <Image src={img2} objectFit={"cover"} h={"100%"} w={"100%"} />
-            </GridItem>
-            <GridItem w={"100%"} h={"100%"} maxH={"148px"} maxW={"148px"}>
-              <Image src={img2} objectFit={"cover"} h={"100%"} w={"100%"} />
-            </GridItem>
+            {post?.map((val, idx) => {
+              return (
+                <>
+                  <Link to={`/post/${val.id}`}>
+                    <GridItem
+                      w={"100%"}
+                      h={"100vh"}
+                      maxH={"148px"}
+                      maxW={"148px"}
+                    >
+                      <Image
+                        key={idx}
+                        src={val.image}
+                        objectFit={"cover"}
+                        h={"100vh"}
+                        maxH={"148px"}
+                        w={"100vw"}
+                      />
+                    </GridItem>
+                  </Link>
+                </>
+              );
+            })}
           </Grid>
         </Flex>
       </Center>

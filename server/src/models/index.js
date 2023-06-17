@@ -49,5 +49,10 @@ db.Sequelize = Sequelize;
 
 db.User = require("./user")(sequelize, Sequelize);
 db.Token = require("./token")(sequelize, Sequelize);
+db.Post = require("./post")(sequelize, Sequelize);
+
+db.Post.belongsTo(db.User, {
+  foreignKey: "user_id",
+});
 
 module.exports = db;
