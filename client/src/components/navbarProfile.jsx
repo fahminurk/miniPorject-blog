@@ -16,17 +16,23 @@ import { BiChevronDown } from "react-icons/bi";
 import { MdArrowBackIos } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { ThemeContext } from "../App";
+
 export default function NavbarProfile() {
   const userSelector = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const { theme } = useContext(ThemeContext);
+
   return (
     <>
       <Center
-        // bg={"white"}
+        id="navbarProfile"
+        // bg={"black"}
         w={"100vw"}
         h="44px"
-        border={"1px "}
-        zIndex={1}
+        borderBottom={"1px "}
+        zIndex={2}
         position={"fixed"}
         top={0}
       >
@@ -51,16 +57,37 @@ export default function NavbarProfile() {
           </Flex> */}
           <Menu>
             <MenuButton
-              // color={"white"}
-              // variant={"outline"}
+              variant={"outline"}
+              color={theme === "light" ? "black" : "white"}
+              bg={theme === "light" ? "white" : "black"}
+              borderColor={theme === "light" ? "black" : "white"}
+              // _active={theme === "light" ? "black" : "white"}
+              _active={
+                theme === "light"
+                  ? { bg: "black", color: "white" }
+                  : { bg: "white", color: "black" }
+              }
+              _hover={
+                theme === "light"
+                  ? { bg: "black", color: "white" }
+                  : { bg: "white", color: "black" }
+              }
               size={"sm"}
               as={Button}
               rightIcon={<BiChevronDown />}
             >
               {userSelector.username}
             </MenuButton>
-            <MenuList>
+            <MenuList p={0} minW={"110px"}>
               <MenuItem
+                borderRadius={5}
+                bg={theme === "light" ? "black" : "white"}
+                color={theme === "light" ? "white" : "black"}
+                _hover={
+                  theme === "light"
+                    ? { bg: "white", color: "black" }
+                    : { bg: "black", color: "white" }
+                }
                 onClick={() => {
                   localStorage.removeItem("user");
                   localStorage.removeItem("theme");
@@ -90,7 +117,7 @@ export function NavbarPhoto() {
         // bg={"white"}
         w={"100vw"}
         h="44px"
-        border={"1px"}
+        borderBottom={"1px"}
         // borderColor={"white"}
         zIndex={2}
         position={"fixed"}

@@ -39,3 +39,8 @@
   background-color: black;
   border-color: white;
 }
+
+#dark #menu {
+  background-color: white;
+  /* color: white; */
+}

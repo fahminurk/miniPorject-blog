@@ -22,7 +22,7 @@ export default function NavbarHome() {
         // bg={"white"}
         w={"100vw"}
         h="44px"
-        border={"1px solid black"}
+        borderBottom={"1px"}
         zIndex={1}
         position={"fixed"}
         top={0}

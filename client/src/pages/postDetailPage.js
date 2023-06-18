@@ -46,7 +46,13 @@ export default function PostDetailPage() {
     <>
       {/* <NavbarPhoto /> */}
       <Center>
-        <Box flexDir={"column"} pt={"44px"} pb={"50px"} h={"100vh"}>
+        <Box
+          flexDir={"column"}
+          pt={"44px"}
+          pb={"50px"}
+          h={"100vh"}
+          borderInline={"1px"}
+        >
           <Flex
             w={"100vw"}
             maxW={"470px"}

@@ -58,8 +58,9 @@ export default function ProfilePage() {
           p={3}
           pt={"80px"}
           pb={"35px"}
-          // border={"1px"}
+          zIndex={0}
           gap={3}
+          border={"1px"}
         >
           {/* avatar, username, editP */}
           <Flex h={"100vh"} maxH={"87px"} gap={3}>
