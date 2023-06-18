@@ -44,9 +44,9 @@ export default function PostDetailPage() {
   }
   return (
     <>
-      <NavbarPhoto />
+      {/* <NavbarPhoto /> */}
       <Center>
-        <Box flexDir={"column"} pt={"44px"} pb={"50px"}>
+        <Box flexDir={"column"} pt={"44px"} pb={"50px"} h={"100vh"}>
           <Flex
             w={"100vw"}
             maxW={"470px"}
@@ -56,7 +56,7 @@ export default function PostDetailPage() {
             borderInline={"1px"}
           >
             <Box>
-              <Avatar />
+              <Avatar src={userSelector.avatar_url} />
             </Box>
             <Text>{userSelector.username}</Text>
             <Box>
@@ -115,7 +115,7 @@ export default function PostDetailPage() {
           </Flex>
         </Box>
       </Center>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

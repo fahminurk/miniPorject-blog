@@ -129,7 +129,7 @@ export default function HomePage() {
                     </Flex>
 
                     <Flex borderInline={"1px"} px={2} gap={2}>
-                      <Text fontWeight={"bold"}>{userSelector.username}</Text>
+                      <Text fontWeight={"bold"}>{val.user.username}</Text>
                       <Text>{val.caption}</Text>
                     </Flex>
 
@@ -158,7 +158,7 @@ export default function HomePage() {
           </Flex>
         </Center>
       </Box>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

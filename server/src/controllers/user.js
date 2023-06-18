@@ -86,7 +86,6 @@ const userController = {
       return res.status(500).send(err.message);
     }
   },
-
   getByToken: async (req, res, next) => {
     try {
       let token = req.headers.authorization;
@@ -258,7 +257,7 @@ const userController = {
     try {
       let token = req.headers.authorization;
       const { id } = req.user;
-      console.log(req.user);
+      // console.log(req.user);
       await db.User.update(
         {
           status: "verified",

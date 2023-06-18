@@ -8,6 +8,9 @@ import ChangePasswordPage from "../pages/changePasswordPage";
 import ProtectedPage from "./protectedPage";
 import VerifPage from "../pages/verifPage";
 import PostDetailPage from "../pages/postDetailPage";
+import NavbarProfile, { NavbarPhoto } from "../components/navbarProfile";
+import Footer from "../components/Footer";
+import NavbarHome from "../components/navbarHome";
 
 const routes = [
   <Route
@@ -30,7 +33,9 @@ const routes = [
     path="/profile"
     element={
       <ProtectedPage needLogin={true}>
+        <NavbarProfile />
         <ProfilePage />
+        <Footer />
       </ProtectedPage>
     }
   />,
@@ -38,7 +43,9 @@ const routes = [
     path="/post/:id"
     element={
       <ProtectedPage needLogin={true}>
+        <NavbarPhoto />
         <PostDetailPage />
+        <Footer />
       </ProtectedPage>
     }
   />,
@@ -54,7 +61,9 @@ const routes = [
     path="/home"
     element={
       <ProtectedPage needLogin={true}>
+        <NavbarHome />
         <HomePage />
+        <Footer />
       </ProtectedPage>
     }
   />,

@@ -1,13 +1,25 @@
-import { Box, Center, Flex, Icon, IconButton, Image } from "@chakra-ui/react";
-import instagram from "../assets/Instagram_logo.png";
-import love from "../assets/love.png";
-import { AiOutlinePlusSquare } from "react-icons/ai";
+import {
+  Box,
+  Center,
+  Flex,
+  Icon,
+  IconButton,
+  Image,
+  Text,
+} from "@chakra-ui/react";
+import instagram_lightmode from "../assets/Instagram_logo.png";
+import instagram_darkmode from "../assets/Instagram_logo_darkmode.png";
+import { Switch } from "@chakra-ui/react";
+import { useContext } from "react";
+import { ThemeContext } from "../App";
 
 export default function NavbarHome() {
+  const { theme, toggleTheme } = useContext(ThemeContext);
   return (
     <>
       <Center
-        bg={"white"}
+        id="navbarHome"
+        // bg={"white"}
         w={"100vw"}
         h="44px"
         border={"1px solid black"}
@@ -26,16 +38,22 @@ export default function NavbarHome() {
           // mr={6}
         >
           <Box w={"100px"}>
-            <Image src={instagram} />
+            <Image
+              id="logo"
+              src={theme === "light" ? instagram_lightmode : instagram_darkmode}
+            />
+            {/* <Image src={instagram_darkmode} /> */}
           </Box>
 
-          <Flex gap={5}>
-            <Box boxSize={8}>
-              <Image as={AiOutlinePlusSquare} size={"lg"} />
-            </Box>
-            <Box boxSize={8} mt={1}>
-              <Image src={love} />
-            </Box>
+          <Flex id="switch" align={"center"} gap={3}>
+            <Text fontSize={10}>
+              {theme === "light" ? "Light mode" : "Dark mode"}
+            </Text>
+            <Switch
+              colorScheme="cyan"
+              onChange={toggleTheme}
+              defaultChecked={theme === "dark" ? true : false}
+            />
           </Flex>
         </Flex>
         {/* </Flex> */}

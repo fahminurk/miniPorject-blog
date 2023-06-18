@@ -54,7 +54,7 @@ export default function ProfilePage() {
           flexDir={"column"}
           w={"100vw"}
           maxW={"470px"}
-          // h={"100vh"}
+          h={"100vh"}
           p={3}
           pt={"80px"}
           pb={"35px"}
@@ -158,7 +158,7 @@ export default function ProfilePage() {
           </Grid>
         </Flex>
       </Center>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

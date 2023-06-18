@@ -1,0 +1,41 @@
+#light {
+  background-color: white;
+  color: black;
+  transition: 0.5s;
+}
+
+#light #navbarHome {
+  background-color: white;
+  transition: 0.5s;
+}
+#light #navbarProfile {
+  background-color: white;
+}
+
+#light #footer {
+  background-color: white;
+  transition: 0.5s;
+}
+/* dark */
+#dark {
+  background-color: black;
+  color: white;
+  transition: 0.5s;
+}
+
+#dark #navbarHome {
+  background-color: black;
+  border-color: white;
+  transition: 0.5s;
+}
+
+#dark #footer {
+  background-color: black;
+  border-color: white;
+  transition: 0.5s;
+}
+
+#dark #navbarProfile {
+  background-color: black;
+  border-color: white;
+}

@@ -34,10 +34,11 @@ export default function Footer() {
   return (
     <>
       <Center
-        bg={"white"}
+        id="footer"
+        // bg={"white"}
         w={"100vw"}
         h="48px"
-        border={"1px solid black"}
+        borderTop={"1px"}
         zIndex={1}
         position={"fixed"}
         bottom={0}
