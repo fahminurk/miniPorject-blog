@@ -31,10 +31,7 @@ function App() {
     const themeNow = localStorage.getItem("theme");
     if (themeNow) {
       setTheme(themeNow);
-    } else {
-      setTheme(null);
     }
-
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
