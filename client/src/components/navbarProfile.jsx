@@ -28,7 +28,6 @@ export default function NavbarProfile() {
     <>
       <Center
         id="navbarProfile"
-        // bg={"black"}
         w={"100vw"}
         h="44px"
         borderBottom={"1px "}
@@ -51,17 +50,13 @@ export default function NavbarProfile() {
           <Box>
             <Icon boxSize={"25px"} as={FiSettings} />
           </Box>
-          {/* <Flex alignItems={"center"}>
-            <Text>{userSelector.username}</Text>
-            <Icon as={BiChevronDown} />
-          </Flex> */}
+
           <Menu>
             <MenuButton
               variant={"outline"}
               color={theme === "light" ? "black" : "white"}
               bg={theme === "light" ? "white" : "black"}
               borderColor={theme === "light" ? "black" : "white"}
-              // _active={theme === "light" ? "black" : "white"}
               _active={
                 theme === "light"
                   ? { bg: "black", color: "white" }
@@ -114,11 +109,9 @@ export function NavbarPhoto() {
     <>
       <Center
         id="navbarProfile"
-        // bg={"white"}
         w={"100vw"}
         h="44px"
         borderBottom={"1px"}
-        // borderColor={"white"}
         zIndex={2}
         position={"fixed"}
         top={0}
@@ -129,8 +122,6 @@ export function NavbarPhoto() {
           h={"44px"}
           alignItems={"center"}
           px={3}
-
-          // border={"1px"}
         >
           <Link to="/profile">
             <Icon boxSize={"25px"} as={MdArrowBackIos} />

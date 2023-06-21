@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
-
 import { api } from "../api/api";
 import { useLocation } from "react-router-dom";
 import {
   Avatar,
   Box,
-  Button,
   Center,
+  Divider,
   Flex,
-  IconButton,
   Image,
   Menu,
   MenuButton,
@@ -17,12 +15,12 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import Footer from "../components/Footer";
-import { NavbarPhoto } from "../components/navbarProfile";
 import { useSelector } from "react-redux";
 import { CiMenuKebab } from "react-icons/ci";
 import DeletePost from "../components/deletePost";
 import EditPost from "../components/editPost";
+import { ThemeContext } from "../App";
+import { useContext } from "react";
 
 export default function PostDetailPage() {
   const location = useLocation();
@@ -31,7 +29,8 @@ export default function PostDetailPage() {
   const userSelector = useSelector((state) => state.auth);
   const DeleteModal = useDisclosure();
   const EditModal = useDisclosure();
-  // const [deleteId, setDeleteId] = useState();
+  const { theme } = useContext(ThemeContext);
+
   useEffect(() => {
     fetchPost();
   }, []);
@@ -42,38 +41,42 @@ export default function PostDetailPage() {
       setPost(res.data);
     });
   }
+
   return (
     <>
-      {/* <NavbarPhoto /> */}
       <Center>
-        <Box
-          flexDir={"column"}
-          pt={"44px"}
-          pb={"50px"}
-          h={"100vh"}
-          borderInline={"1px"}
-        >
+        <Box flexDir={"column"} pt={"44px"} h={"100vh"} borderInline={"1px"}>
           <Flex
             w={"100vw"}
             maxW={"470px"}
             p={2}
             justifyContent={"space-between"}
             alignItems={"center"}
-            borderInline={"1px"}
           >
             <Box>
               <Avatar src={userSelector.avatar_url} />
             </Box>
-            <Text>{userSelector.username}</Text>
+            <Text fontWeight={"bold"}>{userSelector.username}</Text>
             <Box>
               <Menu>
-                <MenuButton
-                  as={IconButton}
-                  size={"lg"}
-                  icon={<CiMenuKebab />}
-                ></MenuButton>
-                <MenuList>
-                  <MenuItem onClick={EditModal.onOpen}>
+                <MenuButton mt={1}>
+                  <Box boxSize={8}>
+                    <Image as={CiMenuKebab} size={"sm"} />
+                  </Box>
+                </MenuButton>
+
+                <MenuList p={0} minW={"110px"}>
+                  <MenuItem
+                    // borderRadius={5}
+                    onClick={EditModal.onOpen}
+                    bg={theme === "light" ? "black" : "white"}
+                    color={theme === "light" ? "white" : "black"}
+                    _hover={
+                      theme === "light"
+                        ? { bg: "white", color: "black" }
+                        : { bg: "black", color: "white" }
+                    }
+                  >
                     Edit
                     <EditPost
                       isOpen={EditModal.isOpen}
@@ -83,7 +86,18 @@ export default function PostDetailPage() {
                       fetch={fetchPost}
                     />
                   </MenuItem>
-                  <MenuItem onClick={DeleteModal.onOpen}>
+                  <Divider />
+                  <MenuItem
+                    onClick={DeleteModal.onOpen}
+                    // borderRadius={5}
+                    bg={theme === "light" ? "black" : "white"}
+                    color={theme === "light" ? "white" : "black"}
+                    _hover={
+                      theme === "light"
+                        ? { bg: "white", color: "black" }
+                        : { bg: "black", color: "white" }
+                    }
+                  >
                     Delete
                     <DeletePost
                       isOpen={DeleteModal.isOpen}
@@ -100,7 +114,7 @@ export default function PostDetailPage() {
             flexDir={"column"}
             w={"100vw"}
             maxW={"470px"}
-            border={"1px"}
+            borderTop={"1px"}
             gap={3}
           >
             <Box maxW={"470px"} maxH={"470px"} h={"100vh"}>
@@ -112,18 +126,15 @@ export default function PostDetailPage() {
               />
             </Box>
           </Flex>
-          <Flex px={1} borderInline={"1px"}>
-            Liked by
+          <Flex px={1} borderTop={"1px"}>
+            {post.likes} {post.likes <= 1 ? "Like" : "Likes"}
           </Flex>
-          <Flex gap={2} border={"1px"} px={1}>
+          <Flex gap={2} px={1} borderY={"1px"}>
             <Text fontWeight={"bold"}>{userSelector.username}</Text>
             <Text>{post.caption}</Text>
           </Flex>
         </Box>
       </Center>
-      {/* <Footer /> */}
     </>
   );
 }
-
-// <Image as={CiMenuKebab} size={"lg"} />

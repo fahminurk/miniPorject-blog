@@ -65,7 +65,6 @@ export default function ForgotPasswordPage() {
         <Center h={"100vh"}>
           <Flex
             my={3}
-            bg={"white"}
             flexDir={"column"}
             w={"350px"}
             // h={"100vh"}
@@ -94,7 +93,6 @@ export default function ForgotPasswordPage() {
               <Flex flexDir={"column"} gap={2}>
                 <Input
                   id="email"
-                  variant={"filled"}
                   placeholder="Email"
                   onChange={(e) => {
                     setEmail(e.target.value);

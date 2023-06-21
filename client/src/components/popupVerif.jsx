@@ -23,7 +23,6 @@ export default function PopupVerif() {
       {/* <Center> */}
       <Center
         w={"100vw"}
-        // maxW={"470px"}
         bg={"red.400"}
         justifyContent={"center"}
         py={1}

@@ -7,23 +7,26 @@ import {
   Image,
   Input,
   InputGroup,
-  InputRightElement,
+  InputRightAddon,
   Text,
   useToast,
 } from "@chakra-ui/react";
-import instagram from "../assets/Instagram_logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { TbAlertCircleFilled } from "react-icons/tb";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import YupPassword from "yup-password";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { ViewOffIcon, ViewIcon } from "@chakra-ui/icons";
 import { api } from "../api/api";
+import { ThemeContext } from "@emotion/react";
+import instagram_lightmode from "../assets/Instagram_logo.png";
+import instagram_darkmode from "../assets/Instagram_logo_darkmode.png";
 
 export default function RegisterPage() {
+  const { theme } = useContext(ThemeContext);
+
   YupPassword(Yup);
   const nav = useNavigate();
   const [show, setShow] = React.useState(false);
@@ -64,7 +67,6 @@ export default function RegisterPage() {
     onSubmit: async () => {
       const { email, username, password } = formik.values;
       const user = { email, username, password };
-      // setIsLoading(true);
       await api
         .post("/accounts", user)
         .then((res) => {
@@ -91,7 +93,6 @@ export default function RegisterPage() {
         });
     },
   });
-  // console.log(formik);
   function inputHandler(e) {
     const { value, id } = e.target;
     formik.setFieldValue(id, value);
@@ -99,19 +100,24 @@ export default function RegisterPage() {
 
   return (
     <>
-      <Box>
+      <Box id="register">
         <Center>
           <Flex flexDir={"column"}>
             <Flex
               my={3}
-              bg={"white"}
               flexDir={"column"}
               w={"350px"}
               border={"1px"}
               borderColor={"#ababab"}
-              // mb={5}
             >
-              <Image src={instagram} mt={10} mb={5} mx={20} />
+              <Image
+                src={
+                  theme === "light" ? instagram_lightmode : instagram_darkmode
+                }
+                mt={10}
+                mb={5}
+                mx={20}
+              />
               <Flex px={10} gap={5} flexDir={"column"}>
                 <Text textAlign={"center"} fontSize={"15px"}>
                   Sign up to see photos and videos from your friends.
@@ -125,19 +131,27 @@ export default function RegisterPage() {
                 </Button>
 
                 <Flex alignItems={"center"} gap={2}>
-                  <Box w={"45%"} h={0.2} bg={"black"} />
+                  <Box
+                    w={"45%"}
+                    h={0.2}
+                    bg={theme == "dark" ? "black" : "white"}
+                  />
                   <Box fontSize={10} w={"10%"}>
                     OR
                   </Box>
-                  <Box w={"45%"} h={0.2} bg={"black"} />
+                  <Box
+                    w={"45%"}
+                    h={0.2}
+                    bg={theme == "dark" ? "black" : "white"}
+                  />
                 </Flex>
                 <Flex flexDir={"column"}>
                   {/* email */}
                   <Input
                     id="email"
-                    variant={"filled"}
                     placeholder="Email"
                     onChange={inputHandler}
+                    bg={"black"}
                   />
                   <Box w={"100%"} h={8}>
                     <Flex
@@ -155,7 +169,6 @@ export default function RegisterPage() {
                   {/* username */}
                   <Input
                     id="username"
-                    variant={"filled"}
                     placeholder="Username "
                     onChange={inputHandler}
                   />
@@ -176,16 +189,15 @@ export default function RegisterPage() {
                   <InputGroup size="md">
                     <Input
                       id="password"
-                      variant={"filled"}
                       placeholder="Password"
                       type={show ? "text" : "password"}
                       onChange={inputHandler}
                     />
-                    <InputRightElement width="4rem">
+                    <InputRightAddon width="2.5rem" p={0}>
                       <Button h="1.75rem" size="sm" onClick={handleClick}>
                         {show ? <ViewOffIcon /> : <ViewIcon />}
                       </Button>
-                    </InputRightElement>
+                    </InputRightAddon>
                   </InputGroup>
                   <Box w={"100%"} h={8}>
                     <Flex
@@ -204,16 +216,15 @@ export default function RegisterPage() {
                   <InputGroup size="md">
                     <Input
                       id="confirmPassword"
-                      variant={"filled"}
                       placeholder="Confirm Password"
                       type={show1 ? "text" : "password"}
                       onChange={inputHandler}
                     />
-                    <InputRightElement width="4rem">
+                    <InputRightAddon width="2.5rem" p={0}>
                       <Button h="1.75rem" size="sm" onClick={handleClick1}>
                         {show1 ? <ViewOffIcon /> : <ViewIcon />}
                       </Button>
-                    </InputRightElement>
+                    </InputRightAddon>
                   </InputGroup>
 
                   <Box w={"100%"} h={8}>
@@ -267,10 +278,8 @@ export default function RegisterPage() {
               </Box>
             </Flex>
             <Flex
-              bg={"white"}
               flexDir={"column"}
               w={"350px"}
-              // h={"100vh"}
               border={"1px"}
               borderColor={"#ababab"}
               mb={3}

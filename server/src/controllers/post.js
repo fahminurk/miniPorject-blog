@@ -5,17 +5,17 @@ const post_url = process.env.post_url;
 const postController = {
   newPost: async (req, res) => {
     try {
-      // console.log("asdasdf");
       const { caption } = req.body;
       const { filename } = req.file;
 
-      await db.Post.create({
+      const post = await db.Post.create({
         caption,
-        date: moment().format("MMMM Do YYYY, h:mm:ss"),
+        date: moment().format("LLLL"),
         image: post_url + filename,
         user_id: req.params.id,
       });
-      return res.send({ message: "success uploud new post" });
+
+      return res.send({ data: post, message: "success uploud new post" });
     } catch (err) {
       console.log(err.message);
       return res.status(500).send(err.message);
@@ -24,7 +24,10 @@ const postController = {
   getAllPost: async (req, res) => {
     await db.Post.findAll({
       include: [
-        { model: db.User, attributes: ["username", "fullname", "avatar_url"] },
+        {
+          model: db.User,
+          attributes: ["username", "fullname", "avatar_url"],
+        },
       ],
     }).then((result) => res.send(result));
   },
@@ -68,6 +71,39 @@ const postController = {
       }
     );
     return res.send({ message: "success edited" });
+  },
+  likePost: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const post = await db.Post.findByPk(id);
+      if (!post) {
+        throw new Error("post not found");
+      }
+      post.likes++;
+      await post.save();
+      return res.send({ message: "post liked successfully" });
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).send(err.message);
+    }
+  },
+  unlikePost: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const post = await db.Post.findByPk(id);
+      if (!post) {
+        throw new Error("post not found");
+      }
+
+      if (post.likes > 0) {
+        post.likes--;
+        await post.save();
+      }
+      return res.send({ message: "post unliked successfully" });
+    } catch (err) {
+      console.log(err.message);
+      return res.status(500).send(err.message);
+    }
   },
 };
 

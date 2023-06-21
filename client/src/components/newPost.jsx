@@ -8,9 +8,6 @@ import {
   ModalBody,
   ModalCloseButton,
   Input,
-  Textarea,
-  Box,
-  Avatar,
   Flex,
   useToast,
   Image,
@@ -35,7 +32,7 @@ export default function NewPost(props) {
     const { id, value } = e.target;
     const tempPost = { ...post };
     tempPost[id] = value;
-    console.log(tempPost);
+    // console.log(tempPost);
     setPost(tempPost);
   };
 
@@ -68,17 +65,11 @@ export default function NewPost(props) {
             duration: 1000,
             isClosable: true,
           });
-
+          props.fetch();
           props.onClose();
         })
-        .catch(() => {
-          toast({
-            title: "username alredy exist",
-            status: "error",
-            position: "top",
-            duration: 1000,
-            isClosable: true,
-          });
+        .catch((err) => {
+          console.log(err);
         });
     }
   };

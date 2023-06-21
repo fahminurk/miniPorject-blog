@@ -17,8 +17,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import YupPassword from "yup-password";
-import axios from "axios";
-import { useDispatch } from "react-redux";
 import { api } from "../api/api";
 
 export default function ChangePasswordPage() {

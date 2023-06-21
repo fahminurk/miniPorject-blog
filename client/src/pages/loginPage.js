@@ -6,19 +6,24 @@ import {
   Image,
   Input,
   InputGroup,
+  InputRightAddon,
   InputRightElement,
   Text,
   useToast,
 } from "@chakra-ui/react";
-import instagram from "../assets/Instagram_logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { ViewOffIcon, ViewIcon } from "@chakra-ui/icons";
 import { api } from "../api/api";
 import { useDispatch } from "react-redux";
+import instagram_lightmode from "../assets/Instagram_logo.png";
+import instagram_darkmode from "../assets/Instagram_logo_darkmode.png";
+import { ThemeContext } from "@emotion/react";
 
 export default function LoginPage() {
+  const { theme } = useContext(ThemeContext);
+
   const dispatch = useDispatch();
   const toast = useToast();
   const nav = useNavigate();
@@ -49,8 +54,6 @@ export default function LoginPage() {
         isClosable: true,
       });
     } else {
-      // setIsLoading(true);
-
       await api
         .post("/accounts/login", user)
         .then((res) => {
@@ -59,7 +62,6 @@ export default function LoginPage() {
           token = res.data.token;
         })
         .catch((err) => {
-          // console.log(err.response);
           toast({
             title: err.response.data,
             status: "error",
@@ -101,24 +103,28 @@ export default function LoginPage() {
 
   return (
     <>
-      <Box>
+      <Box id="login">
         <Center h={"100vh"}>
           <Flex flexDir={"column"}>
             <Flex
               my={3}
-              bg={"white"}
               flexDir={"column"}
               w={"350px"}
-              // h={"100vh"}
               border={"1px"}
               borderColor={"#ababab"}
             >
-              <Image src={instagram} mt={10} mb={5} mx={20} />
+              <Image
+                src={
+                  theme === "light" ? instagram_lightmode : instagram_darkmode
+                }
+                mt={10}
+                mb={5}
+                mx={20}
+              />
               <Flex px={10} gap={5} flexDir={"column"}>
                 <Flex flexDir={"column"} gap={5}>
                   <Input
                     id="usernameOrEmail"
-                    variant={"filled"}
                     placeholder=" Email or username "
                     onChange={inputHandler}
                   />
@@ -127,15 +133,14 @@ export default function LoginPage() {
                     <Input
                       type={show ? "text" : "password"}
                       id="password"
-                      variant={"filled"}
                       placeholder="Password"
                       onChange={inputHandler}
                     />
-                    <InputRightElement width="4rem">
-                      <Button h="1.75rem" size="sm" onClick={handleClick}>
+                    <InputRightAddon width="2.7rem" p={0}>
+                      <Button size="sm" onClick={handleClick}>
                         {show ? <ViewOffIcon /> : <ViewIcon />}
                       </Button>
-                    </InputRightElement>
+                    </InputRightAddon>
                   </InputGroup>
                 </Flex>
                 <Box>
@@ -156,11 +161,19 @@ export default function LoginPage() {
                   </Button>
                 </Box>
                 <Flex alignItems={"center"} gap={2}>
-                  <Box w={"45%"} h={0.2} bg={"black"} />
+                  <Box
+                    w={"45%"}
+                    h={0.2}
+                    bg={theme == "dark" ? "black" : "white"}
+                  />
                   <Box fontSize={10} w={"10%"}>
                     OR
                   </Box>
-                  <Box w={"45%"} h={0.2} bg={"black"} />
+                  <Box
+                    w={"45%"}
+                    h={0.2}
+                    bg={theme == "dark" ? "black" : "white"}
+                  />
                 </Flex>
 
                 <a href="https://www.facebook.com/login">
@@ -191,10 +204,8 @@ export default function LoginPage() {
             </Flex>
             {/*  */}
             <Flex
-              bg={"white"}
               flexDir={"column"}
               w={"350px"}
-              // h={"100vh"}
               border={"1px"}
               borderColor={"#ababab"}
             >

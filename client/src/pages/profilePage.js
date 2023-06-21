@@ -27,6 +27,7 @@ import { Link } from "react-router-dom";
 import EditProfile from "../components/editProfile";
 import { api } from "../api/api";
 import { useEffect, useState } from "react";
+import moment from "moment";
 
 export default function ProfilePage() {
   const userSelector = useSelector((state) => state.auth);
@@ -38,10 +39,18 @@ export default function ProfilePage() {
   }, []);
 
   const fetchPost = async () => {
-    await api.get("/posts/" + userSelector.id).then((res) => {
-      console.log(res.data);
-      setPost(res.data);
-    });
+    try {
+      const response = await api.get("/posts/" + userSelector.id);
+      const sortedPosts = response.data.sort((a, b) =>
+        moment(b.date).diff(a.date)
+      );
+      const updatedPosts = sortedPosts.map((post) => ({
+        ...post,
+      }));
+      setPost(updatedPosts);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -54,13 +63,13 @@ export default function ProfilePage() {
           flexDir={"column"}
           w={"100vw"}
           maxW={"470px"}
-          h={"100vh"}
+          h={post.length <= 6 ? "100vh" : null}
           p={3}
           pt={"80px"}
-          pb={"35px"}
+          pb={"55px"}
           zIndex={0}
           gap={3}
-          border={"1px"}
+          // border={"1px"}
         >
           {/* avatar, username, editP */}
           <Flex h={"100vh"} maxH={"87px"} gap={3}>
@@ -74,7 +83,7 @@ export default function ProfilePage() {
               justifyContent={"space-between"}
             >
               <Flex gap={3} align={"center"}>
-                <Text fontSize={"25px"}>{userSelector.fullname}</Text>
+                <Text fontSize={"25px"}>{userSelector.username}</Text>
                 <Link to="">
                   <Box boxSize={5}>
                     <Image as={FiSettings} size={"sm"} />
@@ -83,49 +92,57 @@ export default function ProfilePage() {
               </Flex>
               <Box>
                 <Button size={"sm"} w={"full"} onClick={onOpen}>
-                  <EditProfile isOpen={isOpen} onClose={onClose} />
+                  <EditProfile
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    fetch={fetchPost}
+                  />
                   Edit Profile
                 </Button>
               </Box>
             </Flex>
           </Flex>
           {/* Bio */}
-          <Box>{userSelector.bio}</Box>
+          <Box>
+            <Text fontWeight={"bold"}>{userSelector.fullname}</Text>
+            <Text fontWeight={"thin"}>{userSelector.bio}</Text>
+          </Box>
+
           {/* post followers following */}
           <Flex justifyContent={"space-around"}>
             <Box>
               <Flex flexDir={"column"} align={"center"}>
                 <Text fontWeight={"bold"}>{post.length}</Text>
-                <Text>Posts</Text>
+                <Text fontWeight={"thin"}>Posts</Text>
               </Flex>
             </Box>
             <Box>
               <Flex flexDir={"column"} align={"center"}>
                 <Text fontWeight={"bold"}>79.8M</Text>
-                <Text>Followers</Text>
+                <Text fontWeight={"thin"}>Followers</Text>
               </Flex>
             </Box>
             <Box>
               <Flex flexDir={"column"} align={"center"}>
                 <Text fontWeight={"bold"}>0</Text>
-                <Text>Following</Text>
+                <Text fontWeight={"thin"}>Following</Text>
               </Flex>
             </Box>
           </Flex>
           {/* dashboard, mark, tag */}
-          <Flex justifyContent={"space-between"}>
+          <Flex justifyContent={"space-evenly"}>
             <Link to="">
-              <Box boxSize={8} mx={"30px"}>
+              <Box boxSize={8}>
                 <Image as={RxDashboard} size={"sm"} />
               </Box>
             </Link>
             <Link to="">
-              <Box boxSize={8} mx={"30px"}>
+              <Box boxSize={8}>
                 <Image as={BsBookmark} size={"sm"} />
               </Box>
             </Link>
             <Link to="">
-              <Box boxSize={8} mx={"30px"}>
+              <Box boxSize={8}>
                 <Image as={BiUserPin} size={"sm"} />
               </Box>
             </Link>
@@ -138,6 +155,7 @@ export default function ProfilePage() {
                 <>
                   <Link to={`/post/${val.id}`}>
                     <GridItem
+                      className="postCard"
                       w={"100%"}
                       h={"100vh"}
                       maxH={"148px"}

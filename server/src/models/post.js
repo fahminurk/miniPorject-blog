@@ -8,8 +8,15 @@ module.exports = (sequelize, Sequelize) => {
       image: {
         type: Sequelize.STRING,
       },
+      location: {
+        type: Sequelize.STRING,
+      },
       caption: {
         type: Sequelize.STRING,
+      },
+      likes: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
       },
       //user_id
     },

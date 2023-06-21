@@ -221,7 +221,17 @@ const userController = {
           id: req.params.id,
         },
       });
-      return res.status(200).send({ message: "success edit profile" });
+
+      const user = await db.User.findOne({
+        where: {
+          id: req.params.id,
+        },
+      });
+
+      return res.status(200).send({
+        user,
+        message: "success edit profile",
+      });
     } catch (err) {
       console.log(err.message);
       return res.status(500).send(err.message);

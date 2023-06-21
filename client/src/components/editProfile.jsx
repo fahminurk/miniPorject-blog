@@ -34,7 +34,7 @@ export default function EditProfile(props) {
     const { id, value } = e.target;
     const tempUser = { ...user };
     tempUser[id] = value;
-    console.log(tempUser);
+    // console.log(tempUser);
     setUser(tempUser);
   };
 
@@ -45,7 +45,7 @@ export default function EditProfile(props) {
     formData.append("username", user.username);
     formData.append("bio", user.bio);
 
-    const response = await api
+    await api
       .patch("/accounts/editProfile/" + userSelector.id, formData)
       .then((res) => {
         toast({
@@ -55,10 +55,11 @@ export default function EditProfile(props) {
           duration: 1000,
           isClosable: true,
         });
-        // dispatch({
-        //   type: "login",
-        //   payload: response.data,
-        // });
+        // console.log(res.data);
+        dispatch({
+          type: "login",
+          payload: res.data.user,
+        });
         props.onClose();
       })
       .catch(() => {
@@ -74,7 +75,7 @@ export default function EditProfile(props) {
 
   const handleFile = (event) => {
     setSelectedFile(event.target.files[0]);
-    console.log(event.target.files[0]);
+    // console.log(event.target.files[0]);
     setImage(URL.createObjectURL(event.target.files[0]));
   };
 

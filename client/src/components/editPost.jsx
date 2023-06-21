@@ -8,18 +8,13 @@ import {
   ModalBody,
   ModalCloseButton,
   Input,
-  Textarea,
-  Box,
-  Avatar,
-  Flex,
   useToast,
-  Image,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { api } from "../api/api";
 import { useNavigate } from "react-router-dom";
+
 export default function EditPost(props) {
-  //   console.log(props);
   const nav = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();

@@ -9,9 +9,6 @@ export default function VerifPage() {
   const [token, setToken] = useState();
   const toast = useToast();
   const nav = useNavigate();
-  //   console.log(location);
-  console.log(token);
-  console.log(user);
 
   const fetchUser = async (token) => {
     try {
@@ -20,7 +17,6 @@ export default function VerifPage() {
           Authorization: `Bearer ${token}`,
         },
       }).then((res) => {
-        console.log(res.data);
         setUser(res.data);
       });
     } catch (err) {
@@ -30,7 +26,6 @@ export default function VerifPage() {
 
   useEffect(() => {
     const pathToken = location.pathname.split("/")[2];
-    console.log(pathToken);
     fetchUser(pathToken);
     setToken(pathToken);
   }, []);
@@ -67,7 +62,7 @@ export default function VerifPage() {
 
   return (
     <>
-      <Center>Success, your account has been verified!</Center>
+      <Center h={"100vh"}>Success, your account has been verified!</Center>
     </>
   );
 }

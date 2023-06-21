@@ -11,6 +11,7 @@ import PostDetailPage from "../pages/postDetailPage";
 import NavbarProfile, { NavbarPhoto } from "../components/navbarProfile";
 import Footer from "../components/Footer";
 import NavbarHome from "../components/navbarHome";
+import TestPage from "../pages/test";
 
 const routes = [
   <Route
@@ -63,7 +64,7 @@ const routes = [
       <ProtectedPage needLogin={true}>
         <NavbarHome />
         <HomePage />
-        <Footer />
+        {/* <Footer /> */}
       </ProtectedPage>
     }
   />,
@@ -88,6 +89,7 @@ const routes = [
     path="/*"
     element={<ProtectedPage needLogin={true} guestOnly={true} />}
   />,
+  <Route path="/test" element={<TestPage />} />,
 ];
 
 export default routes;
