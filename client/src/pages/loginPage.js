@@ -115,7 +115,7 @@ export default function LoginPage() {
             >
               <Image
                 src={
-                  theme === "light" ? instagram_lightmode : instagram_darkmode
+                  theme === "light" ? instagram_darkmode : instagram_lightmode
                 }
                 mt={10}
                 mb={5}

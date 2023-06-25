@@ -27,35 +27,26 @@ export default function HomePage() {
   const userSelector = useSelector((state) => state.auth);
   const [posts, setPosts] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const [likes, setLikes] = useState({});
-  console.log(likes);
+  // console.log(posts);
 
   useEffect(() => {
     fetchPost();
-    fetchLikes();
   }, []);
 
   const fetchPost = async () => {
     try {
-      //get posts dari server disimpan di variable response
       const response = await api.get("/posts");
-      //mengurutkan post berdasarkan tanggal menggunakan metod sort pada response
-      //Dengan demikian, postingan akan diurutkan secara menurun berdasarkan tanggalnya.
       const sortedPosts = response.data.sort((a, b) =>
         moment(b.date).diff(a.date)
       );
-      // updatePosts berisi hasil pemetaan semua post yg telah di urutkan
-      //setiap post di maping menjadi objek baru dgn menggunakan operator
-      //spread {...post, comments: []}
-      //dalam objek baru ini kita menambahkan property baru 'comments' dgn nilai array kosong
       const updatedPosts = sortedPosts.map((post) => ({
         ...post,
+        liked: getLikedStatus(post.id),
         comments: [],
       }));
-      //simpang upatePost ke dalam state setPosts
       setPosts(updatedPosts);
 
-      // Fetch comments di setiap post yang ada
+      // Fetch comments for each post
       updatedPosts.forEach((post) => {
         fetchComments(post.id);
       });
@@ -66,24 +57,15 @@ export default function HomePage() {
 
   const fetchComments = async (post_id) => {
     try {
-      const response = await api.get(`/comments/${post_id}`); //get komen by post_id
+      const response = await api.get(`/comments/${post_id}`);
       const comments = response.data;
-      //mengakses nilai sebelumnya(prevPosts) dalam setPosts
       setPosts((prevPosts) => {
-        //membuat variable baru(updtposts), lalu prevposts di maping ulang
         const updatedPosts = prevPosts.map((post) => {
-          //jika prevPost.id === post_id
           if (post.id === post_id) {
-            //maka gabungkan comments(response.data) ke prevPosts
             return { ...post, comments: comments };
-            // Ini menghasilkan objek baru yang merupakan
-            // salinan dari postingan sebelumnya dengan properti comments yang diperbarui.
           }
-          //jika prevPosts !== post_id, return prevPost tanpa perubahan
           return post;
         });
-        // Setelah selesai memetakan semua postingan,
-        // kita mengembalikan updatedPosts sebagai nilai pembaruan state posts.
         return updatedPosts;
       });
     } catch (err) {
@@ -91,45 +73,40 @@ export default function HomePage() {
     }
   };
 
-  const fetchLikes = async () => {
-    try {
-      // mengambil data yang berisi
-      // daftar like yang terkait dengan pengguna yang dipilih (userSelector.id).
-      const response = await api.get(`/likes/${userSelector.id}`);
-      //menggubah response.data berbentuk array menjadi objek
-      //pada awalnya akumulator('acc') di inisial sebagai objek kosong('{}')
-      //Setiap elemen dalam array response.data diteruskan ke fungsi reduce sebagai parameter like.
-      const likesData = response.data.reduce((acc, like) => {
-        //setiap iterasi, entri baru di tambahkan ke objek acc,
-        //key dari entri ini adalah `like.post_id`
-        //acc memiliki value yaitu `like.status`
-        acc[like.post_id] = like.status;
-        // setelah setiap elemen dalam array di olah, objek acc diperbarui dan di kembalikan
-        return acc;
-      }, {});
-      //dgn demikian hasil akhir dari reduce() akan berupa objek `likesData`
-      setLikes(likesData);
-    } catch (error) {
-      console.error(error);
-    }
+  const saveLikedStatus = (post_id, liked) => {
+    const likedStatus = JSON.parse(localStorage.getItem("likedStatus")) || {};
+    likedStatus[post_id] = liked;
+    localStorage.setItem("likedStatus", JSON.stringify(likedStatus));
+  };
+
+  const getLikedStatus = (post_id) => {
+    const likedStatus = JSON.parse(localStorage.getItem("likedStatus")) || {};
+    return likedStatus[post_id] || false;
   };
 
   const handleLikeUnlike = async (post_id) => {
+    const liked = getLikedStatus(post_id);
+
     try {
-      //jika likes[post_id] === 'LIKE', maka post dgn id tersebut sudah di like
-      //dan variable liked bernilai true
-      const liked = likes[post_id] === "LIKE";
-      console.log(liked);
       if (liked) {
-        //jika liked == true, maka delete like
         await api.delete(`/likes/${post_id}`, {
           data: { user_id: userSelector.id },
         });
       } else {
-        //jika liked == false, maka post like
         await api.post(`/likes/${post_id}`, { user_id: userSelector.id });
       }
-      fetchLikes();
+
+      setPosts((prevPosts) => {
+        const updatedPosts = prevPosts.map((post) => {
+          if (post.id === post_id) {
+            return { ...post, liked: !liked };
+          }
+          return post;
+        });
+        return updatedPosts;
+      });
+
+      saveLikedStatus(post_id, !liked); // Menyimpan status liked ke localStorage
       fetchPost();
     } catch (error) {
       console.log(error);
@@ -194,7 +171,6 @@ export default function HomePage() {
               h={!posts ? "100vh" : null}
             >
               {posts?.map((post) => {
-                const liked = likes[post.id] === "LIKE";
                 return (
                   <>
                     <Box key={post.id} mb={5}>
@@ -247,7 +223,12 @@ export default function HomePage() {
                         <Flex align={"center"} gap={5}>
                           <Box boxSize={7}>
                             <Image
-                              as={liked ? AiFillHeart : AiOutlineHeart}
+                              as={
+                                getLikedStatus(post.id)
+                                  ? AiFillHeart
+                                  : AiOutlineHeart
+                              }
+                              size={"lg"}
                               onClick={() => handleLikeUnlike(post.id)}
                             />
                           </Box>

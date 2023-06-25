@@ -112,7 +112,7 @@ export default function RegisterPage() {
             >
               <Image
                 src={
-                  theme === "light" ? instagram_lightmode : instagram_darkmode
+                  theme === "light" ? instagram_darkmode : instagram_lightmode
                 }
                 mt={10}
                 mb={5}
@@ -151,7 +151,6 @@ export default function RegisterPage() {
                     id="email"
                     placeholder="Email"
                     onChange={inputHandler}
-                    bg={"black"}
                   />
                   <Box w={"100%"} h={8}>
                     <Flex

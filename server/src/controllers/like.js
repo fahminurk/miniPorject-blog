@@ -1,9 +1,14 @@
 const db = require("../models");
 
 const LikeController = {
-  getAllLike: async (req, res) => {
+  getAllLikeByUserId: async (req, res) => {
     try {
-      await db.Likes.findAll().then((result) => res.send(result));
+      const { user_id } = req.params;
+      await db.Likes.findAll({
+        where: {
+          user_id,
+        },
+      }).then((result) => res.send(result));
     } catch (err) {
       console.log(err.message);
       return res.status(500).send(err.message);
@@ -32,6 +37,7 @@ const LikeController = {
       const newLike = await db.Likes.create({
         post_id,
         user_id,
+        status: "LIKE",
       });
 
       await post.increment("likes", { by: 1 });
